@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In — FriendCircle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="Css/login.css">
+  <link rel="icon" href="Image/icon.png">
+</head>
+
+<body>
+
+  <div class="screen">
+
+    <!-- LEFT: brand panel -->
+    <aside class="brand-panel">
+      <div class="deco deco-1" aria-hidden="true"></div>
+      <div class="deco deco-2" aria-hidden="true"></div>
+      <div class="deco deco-3" aria-hidden="true"></div>
+
+      <a href="index.html" class="logo">
+        <span class="mark"><span></span><span></span><span></span></span>
+        FriendCircle
+      </a>
+
+      <div class="brand-copy">
+        <span class="eyebrow">Welcome back</span>
+        <h1>Your circle's been <em>waiting</em> for you.</h1>
+        <p>Log in to see what's been planned, who's free this week, and what you missed.</p>
+      </div>
+
+      <div class="brand-quote">
+        <strong id="quote">
+          "It feels like a shared house, not a social network."
+        </strong>
+
+        <span id="author">
+          Courage H. — Circle of 5, since 2026
+        </span>
+      </div>
+    </aside>
+
+    <!-- RIGHT: form panel -->
+    <main class="form-panel">
+      <div class="form-wrap">
+        <a href="index.html" class="logo">
+          <span class="mark"><span></span><span></span><span></span></span>
+          FriendCircle
+        </a>
+
+        <div class="form-head">
+          <h2>Log in</h2>
+          <p>New here? <a href="sign_in.html">Create a circle</a></p>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <div class="form-success" id="formSuccess">
+            <span>✓</span> Logged in — redirecting you to your circle…
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" required>
+            <div class="field-error" id="emailError"><span>⚠</span> <span class="msg">Enter a valid email
+                address.</span></div>
+          </div>
+
+          <div class="field field-password">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password"
+              autocomplete="current-password" required minlength="6">
+            <button type="button" class="toggle-pw" id="togglePw" aria-label="Show password">
+              <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a21.4 21.4 0 0 1 5.06-6.06M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a21.5 21.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+            </button>
+            <div class="field-error" id="passwordError"><span>⚠</span> <span class="msg">Password must be at least 6
+                characters.</span></div>
+          </div>
+
+          <div class="field-row">
+            <label class="remember">
+              <input type="checkbox" name="remember">
+              Stay logged in
+            </label>
+            <a href="#forgot" class="forgot">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span class="btn-label">Log in</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <p class="form-foot">By logging in, you agree to FriendCircle's Terms and Privacy Policy.</p>
+      </div>
+    </main>
+
+  </div>
+
+  <script defer src="Js/login.js"></script>
+
+</body>
+
+</html>
