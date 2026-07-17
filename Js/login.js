@@ -8,7 +8,7 @@
   const submitBtn = document.getElementById('submitBtn');
   const successBox = document.getElementById('formSuccess');
 
-  // ---- show / hide password ----
+  // Show / Hide Password
   toggleBtn.addEventListener('click', function () {
     const isVisible = pwInput.type === 'text';
     pwInput.type = isVisible ? 'password' : 'text';
@@ -17,7 +17,7 @@
     pwInput.focus({ preventScroll: true });
   });
 
-  // ---- validation helpers ----
+  // Validation Helpers
   function isValidEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
   }
@@ -39,8 +39,7 @@
     return valid;
   }
 
-  // validate as the person leaves a field, and re-validate live once
-  // they've already seen an error (so the message clears as soon as it's fixed)
+  // Live validation
   emailInput.addEventListener('blur', validateEmail);
   pwInput.addEventListener('blur', validatePassword);
   emailInput.addEventListener('input', function () {
@@ -50,7 +49,7 @@
     if (pwInput.classList.contains('is-invalid')) validatePassword();
   });
 
-  // ---- submit ----
+  // Submit — verify stored credentials and redirect to dashboard
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     successBox.classList.remove('show');
@@ -59,24 +58,57 @@
     const pwOk = validatePassword();
 
     if (!emailOk || !pwOk) {
-      form.classList.remove('shake'); // restart animation if triggered twice in a row
+      form.classList.remove('shake');
       void form.offsetWidth;
       form.classList.add('shake');
       (emailOk ? pwInput : emailInput).focus();
       return;
     }
 
-    // simulate a network request — there's no backend wired up on this page yet
+    // Check against stored user in localStorage
+    const storedUser = localStorage.getItem('fc_user');
+    if (!storedUser) {
+      // No account found — show failure
+      emailInput.classList.add('is-invalid');
+      emailError.classList.add('show');
+      emailError.querySelector('.msg').textContent = 'No account found with this email. Please sign up first.';
+      form.classList.remove('shake');
+      void form.offsetWidth;
+      form.classList.add('shake');
+      return;
+    }
+
+    const user = JSON.parse(storedUser);
+
+    if (user.email !== emailInput.value.trim() || user.password !== pwInput.value) {
+      // Wrong email or password
+      emailInput.classList.add('is-invalid');
+      emailError.classList.add('show');
+      emailError.querySelector('.msg').textContent = 'Invalid email or password. Try again.';
+      form.classList.remove('shake');
+      void form.offsetWidth;
+      form.classList.add('shake');
+      return;
+    }
+
+    // Credentials match — simulate login
     submitBtn.classList.add('is-loading');
     submitBtn.disabled = true;
 
     setTimeout(function () {
+      localStorage.setItem('fc_logged_in', 'true');
+
       submitBtn.classList.remove('is-loading');
       submitBtn.disabled = false;
       successBox.classList.add('show');
       form.reset();
       setFieldState(emailInput, emailError, true);
       setFieldState(pwInput, pwError, true);
+
+      // Redirect to dashboard
+      setTimeout(function () {
+        window.location.href = 'dashboard.html';
+      }, 600);
     }, 1100);
   });
 
@@ -85,6 +117,7 @@
   });
 })();
 
+// Rotating testimonials on the brand panel
 const testimonials = [
   {
     quote: "It feels like a shared house, not a social network. That difference is the whole point.",
@@ -134,13 +167,10 @@ const author = document.getElementById("author");
 let current = 0;
 
 function changeTestimonial() {
-
   current++;
-
   if (current >= testimonials.length) {
     current = 0;
   }
-
   quote.textContent = `"${testimonials[current].quote}"`;
   author.textContent = testimonials[current].author;
 }
